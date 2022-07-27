@@ -12,13 +12,19 @@ class ScorebrdCubit extends Cubit<ScorebrdState> {
   }
 
   final ScoreRepo scoreRepo;
+
   void fetchScores() async{
     try{
       emit(LoadingState());
-      final scores = scoreRepo.ScoreList0;
+      await Future<void>.delayed(const Duration(seconds: 2));
+      final scores = scoreRepo.scoreList;
       emit(LoadedState(scores));
     } catch (e){
       emit(ErrorState());
     }
+  }
+
+  void setErrorState(){
+    emit(ErrorState());
   }
 }
